@@ -1,0 +1,27 @@
+﻿@page "/utenti"
+@inject HttpClient http
+
+<h3>Utenti</h3>
+
+@foreach (var utente in Dati?.data)
+{
+    <div class="card border-primary mb-3">
+        <div class="card-header">@utente.first_name @utente.last_name</div>
+        <div class="card-body">
+            <h4 class="card-title">@utente.email</h4>
+            <img src="@utente.avatar" />
+        </div>
+    </div>
+}
+
+@code {
+
+    public DatiEsterni Dati { get; set; } = new DatiEsterni();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Dati = await http.GetFromJsonAsync<DatiEsterni>("https://reqres.in/api/users?page=2");
+    }
+
+
+}

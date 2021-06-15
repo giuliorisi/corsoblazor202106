@@ -1,0 +1,25 @@
+﻿@page "/"
+
+<h1>Benvenuto, corso</h1>
+<h3>Eventi passati</h3>
+<ListaEventi Eventi="EventiPassati" Titolo="Elenco eventi passati"
+             OnElimina="EliminaDaEventiPassati" />
+
+@code {
+
+    public List<ElementoListaEventi> EventiPassati { get; set; }
+    = new List<ElementoListaEventi>
+    {
+                new ElementoListaEventi {Id = 1, Nome = "Corso Blazor",
+                    Localita = "Remote",  Data = DateTime.Today.AddDays(-7)},
+                new ElementoListaEventi {Id = 2, Nome = "Corso Blazor WASm",
+                    Localita = "Remote",  Data = DateTime.Today.AddDays(-14)},
+    };
+
+    public void EliminaDaEventiPassati(ElementoListaEventi evento)
+    {
+        EventiPassati.Remove(evento);
+    }
+
+
+}
