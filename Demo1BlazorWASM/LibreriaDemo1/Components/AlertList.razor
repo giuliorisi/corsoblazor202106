@@ -2,8 +2,10 @@
 
 @foreach (var item in Items)
 {
-    <AlertBox>
-        @ItemTemplate(item)
+    <AlertBox CssClass="">
+        <ContentTemplate>
+            @ItemTemplate(item)
+        </ContentTemplate>
     </AlertBox>
 }
 

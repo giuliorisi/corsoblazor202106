@@ -1,7 +1,23 @@
 ﻿@page "/"
+@inject ILog log
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
-<AlertBox></AlertBox>
+<AlertList Items="@Logs">
+    <ItemTemplate>
+        <h3>@context.Id</h3>
+        <p>@context.Severity</p>
+    </ItemTemplate>
+</AlertList>
+
+@code {
+
+    public List<Log> Logs { get; set; } = new List<Log>();
+    protected override void OnInitialized()
+    {
+        Logs = log.Logs().ToList();
+    }
+}
+

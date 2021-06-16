@@ -1,0 +1,113 @@
+﻿@page "/eventifuturi"
+@inject IDatiEventi dati
+
+<div class="jumbotron">
+    <h3>Eventi Futuri</h3>
+</div>
+
+@if (EventoCorrente == null)
+{
+    <ListaEventi Eventi="Eventi" Titolo="Elenco prossimi eventi"
+                 OnCrea="CreaEvento" OnModifica="Modifica"
+                 OnElimina="EliminaDaEventiFuturi" />
+} else
+{
+    <DettaglioEvento TItem="Evento" Item="EventoCorrente"
+                     OnSalva="Salva" OnAnnulla="Annulla">
+        <CampiDelForm Context="eventocorrente">
+
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <InputText id="nome" class="form-control" @bind-Value="eventocorrente.Nome"></InputText>
+                <ValidationMessage For="@( () => eventocorrente.Nome )"></ValidationMessage>
+            </div>
+
+            <div class="form-group">
+                <label for="localita">Località</label>
+                <InputText id="localita" class="form-control" @bind-Value="eventocorrente.Localita"></InputText>
+                <ValidationMessage For="@( () => eventocorrente.Localita )"></ValidationMessage>
+            </div>
+
+            <div class="form-group">
+                <label for="data">Data</label>
+                <InputDate id="data" class="form-control" @bind-Value="eventocorrente.Data"></InputDate>
+            </div>
+
+            <div class="form-group">
+                <label for="descrizione">Descrizione</label>
+                <InputText id="descrizione" class="form-control" @bind-Value="eventocorrente.Descrizione"></InputText>
+            </div>
+
+            <div class="form-group">
+                <label for="note">Note</label>
+                <InputTextArea id="note" class="form-control" @bind-Value="eventocorrente.Note"></InputTextArea>
+            </div>
+
+
+        </CampiDelForm>
+    </DettaglioEvento>
+}
+
+
+
+
+@code {
+    public List<ElementoListaEventi> Eventi { get; set; }
+    public Evento EventoCorrente { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Eventi = dati.EstraiEventi();
+    }
+
+    public void EliminaDaEventiFuturi(ElementoListaEventi evento)
+    {
+        Eventi.Remove(evento);
+    }
+
+    public void CreaEvento()
+    {
+        EventoCorrente = new Evento { Data = DateTime.Today };
+    }
+
+    public void Modifica(ElementoListaEventi eventoDaModificare)
+    {
+        EventoCorrente = new Evento
+        {
+            Data = eventoDaModificare.Data,
+            Descrizione = "",
+            Localita = eventoDaModificare.Localita,
+            Nome = eventoDaModificare.Nome,
+            Id = eventoDaModificare.Id,
+            Note = ""
+        };
+    }
+
+    public void Annulla()
+    {
+        EventoCorrente = null;
+    }
+
+    public void Salva(Evento evento)
+    {
+        if(evento.Id == 0)
+        {
+            Eventi.Add(new ElementoListaEventi
+            {
+                Id = Eventi.Max(x => x.Id) + 1,
+                Data = evento.Data,
+                Localita = evento.Localita,
+                Nome = evento.Nome
+            });
+        } else
+        {
+            var eventoDaModificare = Eventi.Single(x => x.Id == evento.Id);
+            eventoDaModificare.Data = evento.Data;
+            eventoDaModificare.Localita = evento.Localita;
+            eventoDaModificare.Nome = evento.Nome;
+        }
+        EventoCorrente = null;
+    }
+
+
+}

@@ -1,10 +1,10 @@
-﻿using Demo1BlazorWASM.Models;
+﻿using LibreriaDemo1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Demo1BlazorWASM.Services
+namespace LibreriaDemo1.Interfaces
 {
     public interface IDatiEventi
     {

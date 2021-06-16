@@ -1,4 +1,6 @@
 using Demo1BlazorServer.Data;
+using Demo1BlazorServer.Services;
+using LibreriaDemo1.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,7 @@ namespace Demo1BlazorServer
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<IServizioDati, ServizioDati>();
+            services.AddScoped<ILog, LogServer>();
            // services.AddTransient<IServizioDati, ServizioDati>();
         }
 
