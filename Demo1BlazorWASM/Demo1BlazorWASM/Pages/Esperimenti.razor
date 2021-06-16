@@ -1,0 +1,19 @@
+﻿@page "/esperimenti"
+@inject ILog log
+
+<AlertList Items="@Logs">
+    <ItemTemplate>
+        <h3>@context.Id</h3>
+        @context.Description
+    </ItemTemplate>
+</AlertList>
+
+@code {
+
+    public List<Log> Logs { get; set; } = new List<Log>();
+    protected override void OnInitialized()
+    {
+        Logs = log.Logs().ToList();
+    }
+}
+

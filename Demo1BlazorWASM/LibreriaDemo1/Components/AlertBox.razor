@@ -1,0 +1,12 @@
+﻿<div class="@CssClass">
+    @ContentTemplate
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ContentTemplate { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; } = "alert alert-danger";
+
+}

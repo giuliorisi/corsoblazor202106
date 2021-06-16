@@ -1,4 +1,5 @@
 using Demo1BlazorWASM.Services;
+using LibreriaDemo1.Interfaces;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ namespace Demo1BlazorWASM
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<IDatiEventi, DatiEventiStatici>();
+            builder.Services.AddScoped<ILog, ServizioLog>(); 
 
             await builder.Build().RunAsync();
         }
