@@ -15,36 +15,11 @@
     <DettaglioEvento TItem="Evento" Item="EventoCorrente"
                      OnSalva="Salva" OnAnnulla="Annulla">
         <CampiDelForm Context="eventocorrente">
-
-
-            <div class="form-group">
-                <label for="nome">Nome</label>
-                <InputText id="nome" class="form-control" @bind-Value="eventocorrente.Nome"></InputText>
-                <ValidationMessage For="@( () => eventocorrente.Nome )"></ValidationMessage>
-            </div>
-
-            <div class="form-group">
-                <label for="localita">Località</label>
-                <InputText id="localita" class="form-control" @bind-Value="eventocorrente.Localita"></InputText>
-                <ValidationMessage For="@( () => eventocorrente.Localita )"></ValidationMessage>
-            </div>
-
-            <div class="form-group">
-                <label for="data">Data</label>
-                <InputDate id="data" class="form-control" @bind-Value="eventocorrente.Data"></InputDate>
-            </div>
-
-            <div class="form-group">
-                <label for="descrizione">Descrizione</label>
-                <InputText id="descrizione" class="form-control" @bind-Value="eventocorrente.Descrizione"></InputText>
-            </div>
-
-            <div class="form-group">
-                <label for="note">Note</label>
-                <InputTextArea id="note" class="form-control" @bind-Value="eventocorrente.Note"></InputTextArea>
-            </div>
-
-
+            <MyInputText Id="nome" Label="Nome" @bind-Value="eventocorrente.Nome"></MyInputText>
+            <MyInputText Id="localita" Label="Localita" @bind-Value="eventocorrente.Localita"></MyInputText>
+            <MyInputDate Id="data" Label="Data" @bind-Value="eventocorrente.Data"></MyInputDate>
+            <MyInputText Id="descrizione" Label="Descrizione" @bind-Value="eventocorrente.Descrizione"></MyInputText>
+            <MyInputTextArea Id="note" Label="Note" @bind-Value="eventocorrente.Note"></MyInputTextArea>
         </CampiDelForm>
     </DettaglioEvento>
 }
@@ -53,17 +28,19 @@
 
 
 @code {
-    public List<ElementoListaEventi> Eventi { get; set; }
+    public List<ElementoListaEventi> Eventi { get; set; } = new List<ElementoListaEventi>();
     public Evento EventoCorrente { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Eventi = dati.EstraiEventi();
+        Eventi = await dati.EstraiEventiDaAPI();
     }
 
-    public void EliminaDaEventiFuturi(ElementoListaEventi evento)
+
+    public async Task EliminaDaEventiFuturi(ElementoListaEventi evento)
     {
-        Eventi.Remove(evento);
+        await dati.EliminaEvento(evento.Id);
+        Eventi = await dati.EstraiEventiDaAPI();
     }
 
     public void CreaEvento()
@@ -71,17 +48,9 @@
         EventoCorrente = new Evento { Data = DateTime.Today };
     }
 
-    public void Modifica(ElementoListaEventi eventoDaModificare)
+    public async Task Modifica(ElementoListaEventi eventoDaModificare)
     {
-        EventoCorrente = new Evento
-        {
-            Data = eventoDaModificare.Data,
-            Descrizione = "",
-            Localita = eventoDaModificare.Localita,
-            Nome = eventoDaModificare.Nome,
-            Id = eventoDaModificare.Id,
-            Note = ""
-        };
+        EventoCorrente = await dati.EstraiEventoPerID(eventoDaModificare.Id);
     }
 
     public void Annulla()
@@ -89,24 +58,17 @@
         EventoCorrente = null;
     }
 
-    public void Salva(Evento evento)
+    public async Task Salva(Evento evento)
     {
         if(evento.Id == 0)
         {
-            Eventi.Add(new ElementoListaEventi
-            {
-                Id = Eventi.Max(x => x.Id) + 1,
-                Data = evento.Data,
-                Localita = evento.Localita,
-                Nome = evento.Nome
-            });
+            await dati.CreaEvento(evento);
+
         } else
         {
-            var eventoDaModificare = Eventi.Single(x => x.Id == evento.Id);
-            eventoDaModificare.Data = evento.Data;
-            eventoDaModificare.Localita = evento.Localita;
-            eventoDaModificare.Nome = evento.Nome;
+            await dati.ModificaEvento(evento);
         }
+        Eventi = await dati.EstraiEventiDaAPI();
         EventoCorrente = null;
     }
 
