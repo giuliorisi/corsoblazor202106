@@ -1,0 +1,31 @@
+﻿@page "/provanuovouser"
+@inject IReqResService service
+
+<h3>Prova Nuovo User</h3>
+<DettaglioEvento TItem="ReqResPost" Item="NuovoUtente" OnAnnulla="Annulla" OnSalva="Salva">
+    <CampiDelForm Context="nuovoUtente">
+        <MyInputText Id="Name" Label="Name" @bind-Value="nuovoUtente.Name"></MyInputText>
+        <MyInputText Id="Job" Label="Job" @bind-Value="nuovoUtente.Job"></MyInputText>
+    </CampiDelForm>
+</DettaglioEvento>
+
+@Messaggio
+
+
+@code {
+    public ReqResPost NuovoUtente { get; set; } = new ReqResPost();
+    public string Messaggio { get; set; } = "In attesa...";
+
+    private void Annulla()
+    {
+        NuovoUtente = new ReqResPost();
+    }
+
+
+    private async Task Salva()
+    {
+        Messaggio = await service.Create(NuovoUtente);
+        NuovoUtente = new ReqResPost();
+    }
+
+}

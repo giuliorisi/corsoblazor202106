@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo1BlazorWASM", "Demo1BlazorWASM\Demo1BlazorWASM.csproj", "{F8DE882A-59AE-405D-B301-348548626CA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibreriaDemo1", "LibreriaDemo1\LibreriaDemo1.csproj", "{BD55FC90-D888-461A-9B33-CC4D7D0E144A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibreriaDemo1", "LibreriaDemo1\LibreriaDemo1.csproj", "{BD55FC90-D888-461A-9B33-CC4D7D0E144A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo1BlazorServer", "..\Demo1BlazorServer\Demo1BlazorServer\Demo1BlazorServer.csproj", "{5864DD17-743B-482D-9BA7-214E983A19EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo1Blazor.API", "Demo1Blazor.API\Demo1Blazor.API.csproj", "{328107FC-5209-4339-B0B5-DF10AEFBBDDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo1Blazor.API", "Demo1Blazor.API\Demo1Blazor.API.csproj", "{328107FC-5209-4339-B0B5-DF10AEFBBDDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestPractices", "BestPractices\BestPractices.csproj", "{981BF235-C50D-458D-B830-B09127BA04B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{328107FC-5209-4339-B0B5-DF10AEFBBDDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{328107FC-5209-4339-B0B5-DF10AEFBBDDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{328107FC-5209-4339-B0B5-DF10AEFBBDDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{981BF235-C50D-458D-B830-B09127BA04B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{981BF235-C50D-458D-B830-B09127BA04B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{981BF235-C50D-458D-B830-B09127BA04B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{981BF235-C50D-458D-B830-B09127BA04B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

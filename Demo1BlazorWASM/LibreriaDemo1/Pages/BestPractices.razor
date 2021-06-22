@@ -1,0 +1,46 @@
+﻿@page "/bestpractices"
+@inject IReqResService service
+@inject IJSRuntime jsRuntime 
+
+<h3>ReqRes Service</h3>
+@if(Dati != null && Dati.data != null)
+{
+    @foreach (var item in Dati.data)
+    {
+        <p>@item.FirstName @item.LastName</p>
+    }
+}
+<button class="btn btn-danger" @onclick="Cancel">Cancel</button>
+@Message
+
+
+@code {
+
+    public DatiEsterni Dati { get; set; } = new DatiEsterni();
+    public string Message { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Message = await jsRuntime.InvokeAsync<string>("helloJavascript", "Prova Parametro");
+        //Message = (await jsRuntime.InvokeAsync<int>("miaFunzioneSpeciale", "primo", "secondo")).ToString();
+        var myInterop = new MiaClasseInteropJavascript(jsRuntime);
+        Message = (await myInterop.MiaFunzioneSpeciale("terzo", "quarto")).ToString();
+        //await myInterop.DoppioGiro();
+        await myInterop.ChiamaHelloHelperSayHello("Giuseppe");
+
+        Dati = await service.GetData();
+    }
+
+    public void Cancel()
+    {
+        service.Cancel();
+    }
+
+
+    [JSInvokable]
+    public static Task<int[]> RestituisciArrayAsync()
+    {
+        return Task.FromResult(new int[] { 1, 2, 3, 5, 6, 7, 12 });
+    }
+
+}

@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace LibreriaDemo1.Models
 {
     public class Persona
     {
-        public int id { get; set; }
-        public string email { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
+        public int Id { get; set; }
+        public string Email { get; set; }
+        [JsonPropertyName("first_name")]
+        public string FirstName { get; set; }
+        [JsonPropertyName("last_name")]
+        public string LastName { get; set; }
         public string avatar { get; set; }
     }
 
@@ -28,5 +32,14 @@ namespace LibreriaDemo1.Models
         public int total_pages { get; set; }
         public List<Persona> data { get; set; } = new List<Persona>();
         public Support support { get; set; } = new Support();
+    }
+
+
+    public class ReqResPost
+    {
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string Job { get; set; }
     }
 }
