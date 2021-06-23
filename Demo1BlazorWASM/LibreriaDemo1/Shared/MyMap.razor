@@ -1,0 +1,41 @@
+﻿@inject IJSRuntime jsRuntime
+
+<div id="map" style="height:@Height;width:@Width" @ref="ReferenceMapContainer"></div>
+
+
+@code {
+    [Parameter] public string Height { get; set; } = "400px";
+    [Parameter] public string Width { get; set; } = "100%";
+    [Parameter] public int Zoom { get; set; } = 10;
+    [Parameter] public string Center { get; set; } = "Rome, Italy";
+    [Parameter] public string MapType { get; set; } = "satellite";
+    [Parameter] public List<string> PointsOfInterest { get; set; }
+        = new List<string>();
+
+    private ElementReference ReferenceMapContainer;
+    private bool firstRender = true;
+
+
+    protected override async Task OnParametersSetAsync() {
+        if (!firstRender)
+        {
+            await mostraMappa();
+        }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await mostraMappa();
+            this.firstRender = false;
+        }
+    }
+
+    private async Task mostraMappa()
+    {
+        await jsRuntime.InvokeVoidAsync("mostraMappa", ReferenceMapContainer, Zoom, Center, MapType, PointsOfInterest);
+    }
+
+}

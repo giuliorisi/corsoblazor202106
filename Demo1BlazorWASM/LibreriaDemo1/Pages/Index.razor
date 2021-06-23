@@ -1,10 +1,59 @@
 ﻿@page "/"
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 
 <h1>Benvenuto, corso</h1>
-<ProvaVeloce></ProvaVeloce>
+<button @onclick="MostraModale" class="btn btn-success">Modale</button>
+<button @onclick="Naviga" class="btn btn-success">Naviga</button>
+
+
+<MyModal Id="prova" Title="Titolo Modale" OnClose="Chiudi" OnYes="Conferma">
+    <Content>
+        <h3>Ciao</h3>
+    </Content>
+</MyModal>
+
+<MyModal Id="provaForm" Title="Titolo Modale" OnClose="Chiudi" OnYes="Conferma">
+    <Content>
+        <DettaglioEvento TItem="ReqResPost" Item="NuovoUtente" OnAnnulla="Chiudi" OnSalva="Conferma">
+            <CampiDelForm Context="nuovoUtente">
+                <MyInputText Id="Name" Label="Name" @bind-Value="nuovoUtente.Name"></MyInputText>
+                <MyInputText Id="Job" Label="Job" @bind-Value="nuovoUtente.Job"></MyInputText>
+            </CampiDelForm>
+        </DettaglioEvento>
+    </Content>
+</MyModal>
 
 @code {
 
+    public ReqResPost NuovoUtente { get; set; } = new ReqResPost();
 
+    private async Task Conferma()
+    {
+        localStorage.SetItem<ReqResPost>("lastuser", NuovoUtente);
+
+        await jsRuntime.InvokeVoidAsync("nascondiModale", "provaForm");
+    }
+
+    private async Task Chiudi()
+    {
+        await jsRuntime.InvokeVoidAsync("nascondiModale", "provaForm");
+    }
+
+
+    private async Task MostraModale()
+    {
+        await jsRuntime.InvokeVoidAsync("mostraModale", "provaForm");
+    }
+
+    private void Naviga() {
+        navigationManager.NavigateTo("/paginaconparametro/ciao");
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
 
 }

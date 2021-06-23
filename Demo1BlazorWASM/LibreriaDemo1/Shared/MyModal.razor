@@ -1,0 +1,25 @@
+﻿<div class="modal" id="@Id">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+            </div>
+            <div class="modal-body">
+                @Content
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @onclick="OnYes">Save changes</button>
+                <button type="button" class="btn btn-secondary" @onclick="OnClose" >Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Id { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public EventCallback OnYes { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public RenderFragment Content { get; set; }
+
+}

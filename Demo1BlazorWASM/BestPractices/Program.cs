@@ -1,4 +1,5 @@
 using BestPractices.Models;
+using Blazored.LocalStorage;
 using LibreriaDemo1;
 using LibreriaDemo1.Interfaces;
 using LibreriaDemo1.Models;
@@ -22,6 +23,7 @@ namespace BestPractices
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
+            builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<ISaluto, SalutoItaliano>();
 
             builder.Services.AddSingleton(provider =>

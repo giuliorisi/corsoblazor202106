@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo1BlazorServer", "..\Dem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo1Blazor.API", "Demo1Blazor.API\Demo1Blazor.API.csproj", "{328107FC-5209-4339-B0B5-DF10AEFBBDDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestPractices", "BestPractices\BestPractices.csproj", "{981BF235-C50D-458D-B830-B09127BA04B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestPractices", "BestPractices\BestPractices.csproj", "{981BF235-C50D-458D-B830-B09127BA04B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

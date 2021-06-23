@@ -1,0 +1,13 @@
+﻿@inject IJSRuntime jsRuntime
+
+<div class="ct-chart" @ref="elemento"></div>
+
+@code {    
+
+    ElementReference elemento;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await jsRuntime.InvokeVoidAsync("createChart2", elemento);
+    }
+}

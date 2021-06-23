@@ -1,0 +1,22 @@
+﻿@page "/mappa"
+@inject NavigationManager navigationManager
+<MyMap Height="600px" Width="100%" Zoom=10 Center="Via delle Monachelle 84 C, Pomezia" PointsOfInterest="Points"></MyMap>
+
+
+@code {
+    public List<string> Points = new List<string>()
+    {
+        "Via Toledo 1, Napoli",
+        "Via Laurentina, Roma",
+        "Piazza Duomo 1, Milano"
+    };
+
+
+    [JSInvokable]
+    public static  Task<string> GetData(string dato) {
+        // navigationManager.NavigateTo($"/paginaconparametro/{dato}");
+        return  Task.FromResult( $"<h3>Questi sono i dati di {dato}</h3>");
+    }
+
+
+}

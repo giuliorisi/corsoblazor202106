@@ -1,6 +1,7 @@
 ﻿@page "/bestpractices"
 @inject IReqResService service
 @inject IJSRuntime jsRuntime 
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 
 <h3>ReqRes Service</h3>
 @if(Dati != null && Dati.data != null)
@@ -12,11 +13,12 @@
 }
 <button class="btn btn-danger" @onclick="Cancel">Cancel</button>
 @Message
-
+@NuovoUtente.Name @NuovoUtente.Job
 
 @code {
 
     public DatiEsterni Dati { get; set; } = new DatiEsterni();
+    public ReqResPost NuovoUtente { get; set; } = new ReqResPost();
     public string Message { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -29,6 +31,15 @@
         await myInterop.ChiamaHelloHelperSayHello("Giuseppe");
 
         Dati = await service.GetData();
+
+        if (localStorage.ContainKey("lastuser"))
+        {
+            NuovoUtente = localStorage.GetItem<ReqResPost>("lastuser");
+        }
+
+
+
+
     }
 
     public void Cancel()
