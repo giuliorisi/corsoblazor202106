@@ -2,12 +2,45 @@
 
 <div class="ct-chart" @ref="elemento"></div>
 
+<CascadingValue Value="@this">
+    @ChildContent
+</CascadingValue>
+
 @code {    
 
     ElementReference elemento;
 
+    [Parameter]
+    public ChartType Type { get; set; } = ChartType.Line;
+
+    [Parameter]
+    public ChartData ChartData { get; set; } = new ChartData();
+
+    [Parameter]
+    public List<string> Labels { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ChartData.Series = new List<SeriesData>();
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await jsRuntime.InvokeVoidAsync("createChart2", elemento);
+        // await jsRuntime.InvokeVoidAsync("createChart2", elemento);
+
+      
+
+            if(Labels != null)
+            {
+                ChartData.Labels = Labels;
+            }
+
+            await jsRuntime.InvokeVoidAsync("createChart3", elemento,
+                ChartData, Type.ToString());
+        
+
     }
 }

@@ -1,7 +1,33 @@
 ﻿@page "/chart"
 
-<MyChart></MyChart>
+<input type="checkbox" @bind="MostraPetrolio" />
+
+<MyChart Type="ChartType.Line" Labels="@labels.ToList()">
+    <Series Name="Oro" Values="@prezzoOro.ToList()"></Series>
+    @if (MostraPetrolio)
+    {
+        <Series Name="Petrolio" Values="@prezzoPetrolio.ToList()"></Series>
+    }
+</MyChart>
+
 
 @code {
 
+    bool MostraPetrolio = true;
+
+    private static string[] labels = new[]
+    {
+        "Gen", "Feb", "Mar", "Apr","Mag", "Giu"
+    };
+
+    private static double[] prezzoOro = new double[]
+    {
+        34, 38, 42, 29, 54, 36
+        };
+
+
+    private static double[] prezzoPetrolio = new double[]
+    {
+        74, 68, 92, 78, 74, 76
+        };
 }

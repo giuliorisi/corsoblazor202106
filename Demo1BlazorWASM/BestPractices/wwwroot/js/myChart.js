@@ -30,3 +30,13 @@ function createChart2(elemento) {
     // is the actual data object.
     new Chartist.Line(elemento, data);
 }
+
+function createChart3(elemento, data, type) {
+    console.log(type);
+    console.log(data);
+    if (type === 'Line') {
+        elemento.chart = new Chartist.Line(elemento, data);
+    } else {
+        elemento.chart = new Chartist.Bar(elemento, data);
+    }
+}
