@@ -1,0 +1,128 @@
+﻿@page "/counter"
+@inject IndexedDBManager DbManager
+
+
+@if(Operazioni != null)
+{
+           @foreach (var op in Operazioni)
+           {
+               <p>@op.Id @op.Timestamp </p>
+           }
+}
+
+<button @onclick="SincronizzaRemoto" class="btn btn-success">Sync</button>
+<button @onclick="AggiungiPersone" class="btn btn-success">Aggiungi</button>
+
+<button @onclick="LeggiDb" class="btn btn-success">OK</button>
+
+@if (Persone != null)
+{
+    <table class="table">
+        <tbody>
+            @foreach (var persona in Persone)
+            {
+                <tr>
+                    <td>@persona.Id</td>
+                    <td>@persona.FirstName</td>
+                    <td>@persona.LastName</td>
+                    <td>@persona.Address</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+
+    public List<Person> Persone = new List<Person>();
+    public List<Operazione> Operazioni { get; set; } = new List<Operazione>();
+
+    private async Task LeggiOperazioniAperte()
+    {
+        var operazioni = await DbManager.GetRecords<Operazione>("Operazioni");
+        Operazioni = operazioni.Where(o => o.Sincro == false).ToList();
+    }
+
+    private async Task SincronizzaRemoto()
+    {
+        var id = Operazioni.Max (x => x.Id);
+
+
+        // Chiamata remota
+
+        var op = await DbManager.GetRecordById<long, Operazione>("Operazioni", id);
+        if(op != null)
+        {
+            op.Sincro = true;
+
+            var record = new StoreRecord<Operazione>
+            {
+                Storename = "Operazioni",
+                Data = op
+            };
+
+            await DbManager.UpdateRecord(record);
+
+        }
+        await LeggiOperazioniAperte();
+    }
+
+    private async Task LeggiDb()
+    {
+
+        await LeggiOperazioniAperte();
+        var results = await DbManager.GetRecords<Person>(
+            "People");
+        if (results.Any())
+        {
+            Persone = results;
+        }
+        else
+        {
+            Persone.Clear();
+        }
+    }
+
+    private async Task AggiungiPersona()
+    {
+        var nuovaPersona = new Person {CF = "Bla", FirstName = "Mario", LastName = "Rossi", Address = "via del Pino, 2" };
+        var nuovoRecord = new StoreRecord<Person>
+        {
+            Storename = "People",
+            Data = nuovaPersona
+        };
+        await DbManager.AddRecord(nuovoRecord);
+    }
+
+    private async Task AggiungiPersone()
+    {
+        var nuovaOperazione = new Operazione
+        {
+            Categoria = "People",
+            Sincro = false,
+            Timestamp = DateTime.Now
+        };
+
+        var nuovoRecordOp = new StoreRecord<Operazione>
+        {
+            Storename = "Operazioni",
+            Data = nuovaOperazione
+        };
+        await DbManager.AddRecord(nuovoRecordOp);
+
+        for (int i = 0; i < 1000; i++)
+        {
+            var nuovaPersona = new Person { FirstName = i.ToString(), LastName = (i * 2).ToString() };
+            var nuovoRecord = new StoreRecord<Person>
+            {
+                Storename = "People",
+                Data = nuovaPersona
+            };
+            await DbManager.AddRecord(nuovoRecord);
+        }
+    }
+
+   
+
+}
