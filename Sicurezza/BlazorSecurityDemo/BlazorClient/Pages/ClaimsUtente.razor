@@ -1,0 +1,23 @@
+﻿@page "/claimsutente"
+
+<h3>Claims Utente</h3>
+
+<AuthorizeView>
+    <Authorized>
+
+        <h3>Ciao, @context.User.Identity.Name</h3>
+
+        <ul>
+            @foreach (var claim in context.User.Claims)
+            {
+                <li>@claim.Type: @claim.Value   </li>
+            }
+        </ul>
+
+    </Authorized>
+
+    <NotAuthorized>
+        <p>Non sei autenticato!</p>
+    </NotAuthorized>
+</AuthorizeView>
+

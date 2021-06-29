@@ -1,0 +1,26 @@
+﻿@page "/counter"
+
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <p>Solo gli admin mi possono vedere</p>
+    </Authorized>
+    <NotAuthorized>
+        Qui c'è un contenuto che non puoi vedere
+    </NotAuthorized>
+</AuthorizeView>
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
