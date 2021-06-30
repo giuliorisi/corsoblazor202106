@@ -1,0 +1,40 @@
+﻿@page "/fetchdata"
+<div style="height:500px;overflow-y:scroll">
+            <Virtualize Items="eventi" Context="evento">
+                <DettaglioEvento evento="evento"></DettaglioEvento>
+            </Virtualize>
+</div>
+
+
+
+@*<div style="height:500px;overflow-y:scroll">
+    <Virtualize ItemsProvider="@CaricaEventi" Context="evento">
+        <DettaglioEvento evento="evento"></DettaglioEvento>
+    </Virtualize>
+</div>*@
+
+
+
+
+@code {
+    private List<Evento> eventi = new List<Evento>();
+
+    //private async ValueTask<ItemsProviderResult<Evento>> CaricaEventi(ItemsProviderRequest request)
+    //{
+    //    var numeroEventi = Math.Min(request.Count, 10000 - request.StartIndex);
+
+    //    var eventi = new List<Evento>();
+    //    return new ItemsProviderResult<Evento>(eventi, 10000);
+
+    //}
+
+
+    protected override void OnInitialized()
+    {
+        for (int i = 0; i < 10000; i++)
+        {
+            eventi.Add(new Evento { Id = i + 1, Prezzo = i * 2.0, TimeStamp = DateTime.Now });
+        }
+    }
+
+} 

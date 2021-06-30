@@ -1,0 +1,48 @@
+﻿@page "/"
+@inject IJSRuntime jsRuntime
+
+<Component1></Component1>
+<!--<button @onclick="MostraPrompt">OK</button>
+
+<Badge Color="Color.Primary"> Badge Primary</Badge>
+<Badge Color="Color.Secondary"> Badge Secondary</Badge>
+<Slider TValue="decimal?" Value="25m" Max="100m"></Slider>
+<Divider/>
+<NumericEdit TValue="decimal?"  Decimals="3"></NumericEdit>
+<Switch TValue="bool">Esempio Switch</Switch>
+<Divider></Divider>
+<Select TValue="int">
+    <SelectItem Value="1">Uno</SelectItem>
+    <SelectItem Value="2">Due</SelectItem>
+    <SelectItem Value="3">Tre</SelectItem>
+</Select>
+<Divider></Divider>
+<Card>-->
+    @*<CardImage Source="https://www.pianetagenoa1893.net/wp-content/uploads/2020/11/17/35/Maradona_gol_Napoli_1987-1988-700x1024.jpg"></CardImage>*@
+    <!--<CardBody>
+        <CardTitle Size="5">Titolo Card</CardTitle>
+        <CardText>Bla bla bla</CardText>
+        <Button Color="Color.Danger">Aiuto</Button>
+    </CardBody>
+    <CardFooter>
+        Footer
+    </CardFooter>
+</Card>
+<Divider></Divider>
+<Jumbotron Background="Background.Info" Margin="Margin.Is4.FromBottom">
+    <JumbotronTitle >Hello, world</JumbotronTitle>
+</Jumbotron>-->
+
+
+
+@code {
+
+
+    private async Task MostraPrompt()
+    {
+        var myInterop = new ExampleJsInterop(jsRuntime);
+        await myInterop.Prompt("Ciao Ciao");
+
+    }
+
+}

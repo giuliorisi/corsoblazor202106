@@ -1,0 +1,58 @@
+﻿@page "/counter"
+
+<h3>Caricamento Files</h3>
+
+<p>
+    <label>Dimensione massima Files:</label>
+    <input type="number" @bind="maxFileSize" />
+</p>
+
+<p>
+    <label>Numero massimo di File consentiti:</label>
+    <input type="number" @bind="maxAllowedFiles" />
+</p>
+
+<div>
+    <label>Carica fino a @maxAllowedFiles files</label>
+        <InputFile OnChange="@CaricaFiles"  multiple></InputFile>
+</div>
+@if (isLoading)
+{
+    <p>Sto caricando...</p>
+}
+else
+{
+    <ul>
+        @foreach (var file in filesCaricati)
+        {
+            <li>
+                Nome: @file.Name - Dimensione: @file.Size -
+                Content Type: @file.ContentType - Ultima Modifica: @file.LastModified.ToString()
+            </li>
+        }
+    </ul>
+}
+
+<hr />
+
+<h3>Caricamento Immagine</h3>
+<div class="dropArea @dropClass">
+    <InputFile OnChange="@CaricaImmagine" @ondragenter="HandleDragEnter"
+               @ondragleave="HandleDragLeave" multiple></InputFile>
+
+    @foreach (var img in Immagini)
+    {
+        <div style="background-size: cover; background-repeat: no-repeat; width: 200px; height: 200px; background-color: wheat; background-image: url('@img')"></div>
+
+    }
+</div>
+
+
+<hr/>
+<h3>Lettura files</h3>
+<InputFile OnChange="@LeggiFile"></InputFile>
+
+<div class="alert alert-danger">
+    @Testo
+</div>
+
